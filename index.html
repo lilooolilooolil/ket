@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Кетский словарь</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- MAX Bridge: внутри мессенджера MAX даёт доступ к window.WebApp -->
+  <script src="https://st.max.ru/js/max-web-app.js"></script>
+</head>
+<body>
+  <div class="app">
+
+    <!-- Поиск + направление + клавиатура: прилипают к верху -->
+    <div class="controls">
+      <div class="search-box">
+        <input id="search" type="search" placeholder="Начните вводить слово…"
+               autocomplete="off" autocapitalize="none" autocorrect="off">
+        <button id="clear" class="clear" aria-label="Очистить" hidden>&times;</button>
+      </div>
+
+      <div class="directions" role="tablist" aria-label="Направление перевода">
+        <button id="dir-rus" class="dir" role="tab" type="button">Русский → Кетский</button>
+        <button id="dir-ket" class="dir" role="tab" type="button">Кетский → Русский</button>
+      </div>
+
+      <!-- Дополнительная клавиатура: только для направления «Кетский → Русский» -->
+      <div id="kbd" class="kbd" hidden aria-label="Кетские буквы">
+        <button type="button" data-glyph="ӷ">ӷ</button>
+        <button type="button" data-glyph="ӄ">ӄ</button>
+        <button type="button" data-glyph="ӈ">ӈ</button>
+        <button type="button" data-glyph="ө">ө</button>
+        <button type="button" data-glyph="ә">ә</button>
+        <button type="button" data-glyph="’">’</button>
+      </div>
+    </div>
+
+    <div id="status" class="status" role="status"></div>
+    <main id="results" class="results"></main>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+:root {
+  /* фирменные цвета */
+  --brand: #E0173C;
+  --ink: #3B3B3B;
+
+  /* служебные */
+  --card: #ffffff;
+  --field: #f4f4f5;
+  --border: #e6e6e8;
+  --muted: #7a7a7a;
+  --on-brand: rgba(255, 255, 255, 0.85);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--brand);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: calc(10px + env(safe-area-inset-top)) 12px
+           calc(20px + env(safe-area-inset-bottom));
+}
+
+/* ---- прилипшая панель управления (белый блок) ---- */
+.controls {
+  position: sticky;
+  top: calc(8px + env(safe-area-inset-top));
+  z-index: 10;
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 10px;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+#search {
+  width: 100%;
+  padding: 12px 40px 12px 14px;
+  font-size: 17px;
+  color: var(--ink);
+  background: var(--field);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  outline: none;
+  appearance: none;
+}
+
+#search:focus {
+  background: var(--card);
+  border-color: var(--brand);
+}
+
+#search::-webkit-search-cancel-button { display: none; }
+
+.clear {
+  position: absolute;
+  right: 6px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.clear:active { background: var(--field); }
+
+/* ---- переключатель направления ---- */
+.directions {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 4px;
+  background: var(--field);
+  border-radius: 12px;
+}
+
+.dir {
+  flex: 1;
+  padding: 9px 6px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.dir.is-active {
+  background: var(--brand);
+  color: var(--card);
+}
+
+/* ---- клавиатура кетских глифов ---- */
+.kbd {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.kbd button {
+  padding: 12px 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.kbd button:active {
+  background: #fdecee;
+  border-color: var(--brand);
+}
+
+/* ---- статус и подсказки (на красном фоне) ---- */
+.status {
+  min-height: 22px;
+  padding: 8px 4px;
+  font-size: 13px;
+  color: var(--on-brand);
+}
+
+.hint {
+  margin: 28px 8px;
+  color: var(--on-brand);
+  font-size: 15px;
+  text-align: center;
+}
+
+/* ---- карточки результатов (белые блоки) ---- */
+.card {
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+
+.card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.card__word {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.card__gram {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.card__transl {
+  margin-top: 6px;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.card__form {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+  padding: 6px 8px;
+  background: var(--field);
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.card__form-word {
+  flex-shrink: 0;
+  color: var(--ink);
+}
+
+.card__form-transl {
+  color: var(--muted);
+  text-align: right;
+}
