@@ -14,6 +14,10 @@
 
 * { box-sizing: border-box; }
 
+/* атрибут hidden должен всегда побеждать авторские display
+   (иначе .kbd с display:grid не скрывается) */
+[hidden] { display: none !important; }
+
 html, body {
   margin: 0;
   padding: 0;
@@ -36,7 +40,10 @@ body {
            calc(20px + env(safe-area-inset-bottom));
 }
 
-/* ---- прилипшая панель управления (белый блок) ---- */
+/* ---- прилипшая панель управления (белый блок) ----
+   При прокрутке вниз постепенно уезжает за верх экрана
+   (transition на transform), при прокрутке вверх — сразу
+   выплывает обратно. Смещение задаётся в app.js. */
 .controls {
   position: sticky;
   top: calc(8px + env(safe-area-inset-top));
@@ -45,6 +52,8 @@ body {
   border-radius: 16px;
   box-shadow: var(--shadow);
   padding: 10px;
+  transition: transform 0.25s ease-out;
+  will-change: transform;
 }
 
 .search-box {

@@ -181,6 +181,7 @@ async function setDir(d) {
   btnRus.classList.toggle('is-active', d === 'rus-ket');
   btnKet.classList.toggle('is-active', d === 'ket-rus');
   kbdEl.hidden = !DIRS[d].kbd;
+  onScroll();   // высота панели изменилась (клавиатура) — пересчитать
   haptic();
   statusEl.textContent = 'Загрузка словаря…';
   resultsEl.textContent = '';
@@ -216,6 +217,31 @@ clearBtn.addEventListener('click', () => {
 
 btnRus.addEventListener('click', () => setDir('rus-ket'));
 btnKet.addEventListener('click', () => setDir('ket-rus'));
+
+// ---- панель управления: уезжает за верх экрана при прокрутке ----
+// Вниз — постепенно скрывается (копится смещение, экономит
+// место), вверх — сразу выплывает обратно. Наверху страницы
+// всегда видна.
+const controlsEl = document.querySelector('.controls');
+let lastScrollY = window.scrollY;
+let hiddenPx = 0;   // сколько пикселей панели скрыто сверху
+
+function onScroll() {
+  const y = window.scrollY;
+  const dy = y - lastScrollY;
+  lastScrollY = y;
+  if (y <= 0) {
+    hiddenPx = 0;               // наверху — всегда видна
+  } else if (dy > 0) {
+    hiddenPx += dy;             // вниз — копим смещение
+  } else if (dy < 0) {
+    hiddenPx = 0;               // вверх — сразу показываем
+  }
+  hiddenPx = Math.min(hiddenPx, controlsEl.offsetHeight);
+  controlsEl.style.transform =
+    hiddenPx > 0 ? `translateY(${-hiddenPx}px)` : '';
+}
+window.addEventListener('scroll', onScroll, { passive: true });
 
 // Стартовый параметр диплинка: max.ru/<бот>?startapp=ket — сразу кет→рус
 const startParam = (WebApp?.initDataUnsafe?.start_param || '').toString();
